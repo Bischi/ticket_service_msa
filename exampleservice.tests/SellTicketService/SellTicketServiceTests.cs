@@ -25,10 +25,13 @@ namespace exampleservice.tests.SellTicketService
                 ReturnsAsync(new DepositedToCustomerEvent());
             busMock.Setup(s => s.RequestAndReply<FlagTicketAsSoldCommand>(It.IsAny<FlagTicketAsSoldCommand>())).
                 ReturnsAsync(new FlagedTicketAsSoldEvent());
+
             var dataBaseMock = new Moq.Mock<ISellTicketServiceDataBaseRepository>();
-            dataBaseMock.Setup(d => d.SaveTicket(It.IsAny<TicketSpecification>())).
-                ReturnsAsync(1);
+
+            dataBaseMock.Setup(d => d.SaveTicket(It.IsAny<TicketSpecification>())).ReturnsAsync(1);
+
             var instanceUnderTest = new exampleservice.SellTicketService.SellTicketService(busMock.Object, dataBaseMock.Object);
+
             string ticketNumber = "MyTicketNumber";
             var sellTicketCommand = new SellTicketCommand
             {

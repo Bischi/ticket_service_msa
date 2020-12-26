@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CustomerService\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\simplescript\simplescript.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TicketService\Repositories\" />
+    <Folder Include="TicketService\Models\" />
+    <Folder Include="TicketService\Steps\" />
+  </ItemGroup>
 </Project>

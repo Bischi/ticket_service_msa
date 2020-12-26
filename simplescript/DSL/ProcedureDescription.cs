@@ -37,5 +37,10 @@ namespace simplescript.DSL
         {
             return new Procedure<TContext>(this.initStep);
         }
+
+        public object Then()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
