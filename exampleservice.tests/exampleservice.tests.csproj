@@ -17,7 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\exampleservice\exampleservice.csproj" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <Folder Include="TicketService\" />
   </ItemGroup>
