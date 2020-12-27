@@ -14,5 +14,7 @@ namespace exampleservice.TicketService.Repositories
     {
         public Task<int> Add(Ticket ticket);
         public Task<List<Ticket>> Get();
+        public Task<Ticket> Get(string ticketNumber);
+        public Task<int> Save(Ticket ticket);
     }
 }

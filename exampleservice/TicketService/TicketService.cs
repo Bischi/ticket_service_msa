@@ -50,6 +50,16 @@ namespace exampleservice.TicketService
             return await new GetTicketsScript(bus, dataBaseRepository).Handle(command);
         }
 
+        public async Task<EventBase> Handle(FlagTicketAsSoldCommand command)
+        {
+            return await new FlagTicketAsSoldScript(bus, dataBaseRepository).Handle(command);
+        }
+
+        public async Task<EventBase> Handle(OfferTicketForSellCommand command)
+        {
+            return await new OfferTicketForSellScript(bus, dataBaseRepository).Handle(command);
+        }
+
         private void VerifyIputArguments(CreateTicketCommand command)
         {
             if (command == null)

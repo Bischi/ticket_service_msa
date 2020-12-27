@@ -3,7 +3,8 @@
 // Created: 12/26/2020
 //
 //
-using System.Collections.Concurrent;
+
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,18 +15,18 @@ namespace exampleservice.TicketService.Repositories
     public class TicketStorageRepository : ITicketStorageRepository
     {
         // Id, Ticket
-        private ConcurrentDictionary<int, Ticket> Tickets;
+        private Dictionary<string, Ticket> Tickets;
 
         public TicketStorageRepository()
         {
-            Tickets = new ConcurrentDictionary<int, Ticket>();
+            Tickets = new Dictionary<string, Ticket>();
         }
 
         public async Task<int> Add(Ticket ticket)
         {
             return await Task.Run(() =>
             {
-                Tickets.TryAdd(ticket.Id, ticket);
+                Tickets.Add(ticket.TicketNumber, ticket);
                 return 1;
             });
         }
@@ -36,6 +37,31 @@ namespace exampleservice.TicketService.Repositories
             {
                 return Tickets.Values.ToList();
             });
+        }
+
+        public async Task<Ticket> Get(string ticketNumber)
+        {
+            if (Tickets.ContainsKey(ticketNumber))
+            {
+                return await Task.Run(() =>
+                {
+                    return Tickets[ticketNumber];
+                });
+            }
+            else return null;
+        }
+
+        public async Task<int> Save(Ticket ticket)
+        {
+            if (Tickets.ContainsKey(ticket.TicketNumber))
+            {
+                return await Task.Run(() =>
+                {
+                    Tickets[ticket.TicketNumber] = ticket;
+                    return 1;
+                });
+            }
+            else return 0;
         }
     }
 }
