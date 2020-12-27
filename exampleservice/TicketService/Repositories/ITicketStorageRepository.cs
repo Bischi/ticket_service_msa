@@ -11,6 +11,6 @@ namespace exampleservice.TicketService.Repositories
 {
     public interface ITicketStorageRepository
     {
-        public Task<int> Add(Ticket ticket);
+        public Task<bool> Add(Ticket ticket);
     }
 }

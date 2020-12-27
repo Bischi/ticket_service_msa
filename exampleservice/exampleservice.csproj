@@ -13,6 +13,5 @@
   <ItemGroup>
     <Folder Include="TicketService\Repositories\" />
     <Folder Include="TicketService\Models\" />
-    <Folder Include="TicketService\Steps\" />
   </ItemGroup>
 </Project>

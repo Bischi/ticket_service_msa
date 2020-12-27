@@ -19,12 +19,11 @@ namespace exampleservice.TicketService.Repositories
             Tickets = new ConcurrentDictionary<int, Ticket>();
         }
 
-        public async Task<int> Add(Ticket ticket)
+        public async Task<bool> Add(Ticket ticket)
         {
             return await Task.Run(() =>
             {
-                Tickets.TryAdd(ticket.Id, ticket);
-                return 1;
+                return Tickets.TryAdd(ticket.Id, ticket);
             });
         }
     }

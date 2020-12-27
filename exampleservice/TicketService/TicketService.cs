@@ -40,8 +40,10 @@ namespace exampleservice.TicketService
             {
                 return new CouldNotCreateTicketEvent();
             }
-
-            return null;
+            else
+            {
+                return new TicketCreatedEvent { TicketNumber = command.Ticket.TicketNumber };
+            }
         }
 
         private void VerifyIputArguments(CreateTicketCommand command)
@@ -54,23 +56,11 @@ namespace exampleservice.TicketService
 
         private Procedure<TicketContext> GetProcedure()
         {
-            //var withdrawFromBuyerStep = new WithdrawFromBuyerAccount(this.bus);
-            //var depositToSellerStep = new DepositToSellerAccount(this.bus);
-            //var sellTicketStep = new SellTicket(this.bus);
-            //var saveSoldTicketStep = new SaveSoldTicketWithOptimisticLock(this.dataBaseRepository);
-            //return ProcedureDescription<SellTicketContext>.
-            //   Start().
-            //   Then(withdrawFromBuyerStep).
-            //   Then(depositToSellerStep).
-            //   Then(sellTicketStep).
-            //   Then(saveSoldTicketStep).
-            //   Finish();
-
-            var createTicketStepTEST = new CreateTicketStepTEST(this.bus);
+            var createTicketStep = new CreateTicketStep(dataBaseRepository);
 
             return ProcedureDescription<TicketContext>.
                Start().
-               Then(createTicketStepTEST).
+               Then(createTicketStep).
                Finish();
         }
     }

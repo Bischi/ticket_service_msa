@@ -1,7 +1,6 @@
 ﻿using exampleservice.AccoutingService.Contract;
 using exampleservice.Framework.Abstract;
-using exampleservice.SellTicketService.Contract;
-using exampleservice.SellTicketService.Controller;
+using exampleservice.TicketService;
 using exampleservice.TicketService.Contracts;
 using exampleservice.TicketService.Models;
 using exampleservice.TicketService.Repositories;
@@ -30,9 +29,6 @@ namespace exampleservice.tests.SellTicketService
             busMock.Setup(s => s.RequestAndReply<FlagTicketAsSoldCommand>(It.IsAny<FlagTicketAsSoldCommand>())).
                 ReturnsAsync(new FlagedTicketAsSoldEvent());
 
-            //var dataBaseMock = new Moq.Mock<ITicketStorageRepository>();
-            //dataBaseMock.Setup(d => d.Add(It.IsAny<Ticket>())).ReturnsAsync(1);
-
             var database = new TicketStorageRepository();
 
             var instanceUnderTest = new TicketService.TicketService(busMock.Object, database);
@@ -54,16 +50,30 @@ namespace exampleservice.tests.SellTicketService
 
             var resultedEvent = await instanceUnderTest.Handle(createTicketCommand);
 
-
-      
             using (new AssertionScope())
             {
-                resultedEvent.Should().BeNull();
+                resultedEvent.Should().BeOfType(typeof(TicketCreatedEvent));
 
-                //resultedEvent.Should().BeOfType(typeof(TicketSoldEvent));
+                var ticketCreatedEvent = (TicketCreatedEvent)resultedEvent;
+                ticketCreatedEvent.TicketNumber.Should().BeSameAs(ticketNumber);
+            }
+        }
 
-                //var ticketSoldEvent = (TicketSoldEvent)resultedEvent;
-                //ticketSoldEvent.TicketNumber.Should().BeSameAs(ticketNumber);
+        [Test]
+        public async Task Execute_TicketServiceCreateOk_ReturnOkEvent()
+        {
+            var number = "Ticket#2";
+
+            var database = new TicketStorageRepository();
+
+            var instanceUnderTest = new TicketService.Steps.CreateTicketStep(database);
+            var context = new TicketContext { Command = new CreateTicketCommand { Ticket = new Ticket { TicketNumber = number } } };
+            await instanceUnderTest.Execute(context);
+
+            using (new AssertionScope())
+            {
+                context.TicketWasCreated.Should().BeTrue();
+                context.WasCompensated.Should().BeFalse();
             }
         }
     }
