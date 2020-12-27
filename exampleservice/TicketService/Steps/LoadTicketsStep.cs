@@ -4,7 +4,10 @@
 //
 //
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using exampleservice.TicketService.Models;
 using exampleservice.TicketService.Repositories;
 using simplescript.Abstract;
 
@@ -17,8 +20,13 @@ namespace exampleservice.TicketService.Steps
 
         protected override async Task<bool> StepSpecificExecute(GetTicketsContext contextType)
         {
-            var data = await dataRepository.Get();
-            contextType.Tickets = data;
+            contextType.Tickets = contextType.Command.OnlySoldTickets
+                ? await dataRepository.Get((tickets) =>
+                {
+                    return tickets.Where(x => !x.isAvailable).ToList();
+                })
+                : await dataRepository.Get();
+
             return true;
         }
     }

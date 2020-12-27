@@ -53,14 +53,10 @@ namespace exampleservice.tests.TicketService
             };
 
             var resultedEvent = await instanceUnderTest.Handle(createTicketCommand);
-
-
-      
+     
             using (new AssertionScope())
             {
-                resultedEvent.Should().BeNull();
-
-                //resultedEvent.Should().BeOfType(typeof(TicketSoldEvent));
+                resultedEvent.Should().BeOfType(typeof(TicketSoldEvent));
 
                 //var ticketSoldEvent = (TicketSoldEvent)resultedEvent;
                 //ticketSoldEvent.TicketNumber.Should().BeSameAs(ticketNumber);

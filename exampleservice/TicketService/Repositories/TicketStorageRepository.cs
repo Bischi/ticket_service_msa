@@ -4,7 +4,7 @@
 //
 //
 
-
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,6 +36,16 @@ namespace exampleservice.TicketService.Repositories
             return await Task.Run(() =>
             {
                 return Tickets.Values.ToList();
+            });
+        }
+
+        public async Task<List<Ticket>> Get(Func<List<Ticket>, List<Ticket>> filter)
+        {
+            return await Task.Run(() =>
+            {
+                List<Ticket> tickets = Tickets.Values.ToList();
+
+                return filter != null ? filter(tickets) : tickets;
             });
         }
 

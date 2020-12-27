@@ -8,8 +8,6 @@ namespace exampleservice.TicketService.Contracts
 {
     public class GetTicketsCommand
     {
-        public GetTicketsCommand()
-        {
-        }
+        public bool OnlySoldTickets { get; set; }
     }
 }
