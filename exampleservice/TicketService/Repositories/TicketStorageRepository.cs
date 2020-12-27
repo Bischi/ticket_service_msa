@@ -4,6 +4,8 @@
 //
 //
 using System.Collections.Concurrent;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using exampleservice.TicketService.Models;
 
@@ -25,6 +27,14 @@ namespace exampleservice.TicketService.Repositories
             {
                 Tickets.TryAdd(ticket.Id, ticket);
                 return 1;
+            });
+        }
+
+        public async Task<List<Ticket>> Get()
+        {
+            return await Task.Run(() =>
+            {
+                return Tickets.Values.ToList();
             });
         }
     }

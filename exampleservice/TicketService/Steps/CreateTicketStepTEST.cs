@@ -7,21 +7,21 @@ using System;
 using System.Threading.Tasks;
 using exampleservice.Framework.Abstract;
 using exampleservice.TicketService.Contracts;
+using exampleservice.TicketService.Repositories;
 using simplescript.Abstract;
 
 namespace exampleservice.TicketService.Steps
 {
     public class CreateTicketStepTEST : ProcedureStepBase<TicketContext>
     {
-        private IMessageBus bus;
-
-        public CreateTicketStepTEST(IMessageBus bus) => this.bus = bus ?? throw new ArgumentNullException(nameof(bus));
+        private ITicketStorageRepository dataRepository;
+        public CreateTicketStepTEST(ITicketStorageRepository dataRepository) => this.dataRepository = dataRepository ?? throw new ArgumentNullException(nameof(dataRepository));
 
         protected override async Task<bool> StepSpecificExecute(TicketContext contextType)
         {
-            var reply = await this.bus.RequestAndReply(new CreateTicketCommand());
+            var reply = await dataRepository.Add(contextType.Command.Ticket);
 
-            return true;
+            return reply == 1;
         }
     }
 }

@@ -9,6 +9,7 @@ using exampleservice.Framework.Abstract;
 using exampleservice.Framework.BaseFramework;
 using exampleservice.TicketService.Contracts;
 using exampleservice.TicketService.Repositories;
+using exampleservice.TicketService.Scripts;
 using exampleservice.TicketService.Steps;
 using simplescript;
 using simplescript.DSL;
@@ -44,6 +45,11 @@ namespace exampleservice.TicketService
             return null;
         }
 
+        public async Task<EventBase> Handle(GetTicketsCommand command)
+        {
+            return await new GetTicketsScript(bus, dataBaseRepository).Handle(command);
+        }
+
         private void VerifyIputArguments(CreateTicketCommand command)
         {
             if (command == null)
@@ -66,7 +72,7 @@ namespace exampleservice.TicketService
             //   Then(saveSoldTicketStep).
             //   Finish();
 
-            var createTicketStepTEST = new CreateTicketStepTEST(this.bus);
+            var createTicketStepTEST = new CreateTicketStepTEST(this.dataBaseRepository);
 
             return ProcedureDescription<TicketContext>.
                Start().

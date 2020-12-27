@@ -4,6 +4,7 @@
 //
 //
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using exampleservice.TicketService.Models;
 
@@ -12,5 +13,6 @@ namespace exampleservice.TicketService.Repositories
     public interface ITicketStorageRepository
     {
         public Task<int> Add(Ticket ticket);
+        public Task<List<Ticket>> Get();
     }
 }
