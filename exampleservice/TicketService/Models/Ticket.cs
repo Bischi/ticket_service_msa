@@ -19,5 +19,9 @@ namespace exampleservice.TicketService.Models
         public int ToLocationId { get; set; }
 
         public string MeansOfTransport { get; set; }
+
+        public bool isAvailable { get; set; } = true;
+
+        public bool hasOffer { get; set; } = false;
     }
 }
