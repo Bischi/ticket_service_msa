@@ -9,6 +9,7 @@ using exampleservice.Framework.Abstract;
 using exampleservice.Framework.BaseFramework;
 using exampleservice.TicketService.Contracts;
 using exampleservice.TicketService.Repositories;
+using exampleservice.TicketService.Scripts;
 using exampleservice.TicketService.Steps;
 using simplescript;
 using simplescript.DSL;
@@ -42,6 +43,17 @@ namespace exampleservice.TicketService
             }
 
             return null;
+        }
+
+        public async Task<EventBase> Handle(FlagTicketAsSoldCommand command)
+        {
+            return await new FlagTicketAsSoldScript(bus, dataBaseRepository).Handle(command);
+        }
+
+
+        public async Task<EventBase> Handle(OfferTicketForSellCommand command)
+        {
+            return await new OfferTicketForSellScript(bus, dataBaseRepository).Handle(command);
         }
 
         private void VerifyIputArguments(CreateTicketCommand command)
