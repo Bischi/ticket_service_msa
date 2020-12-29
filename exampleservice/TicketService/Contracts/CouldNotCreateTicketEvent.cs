@@ -3,7 +3,6 @@
 // Created: 12/26/2020
 //
 //
-using System;
 using exampleservice.Framework.BaseFramework;
 
 namespace exampleservice.TicketService.Contracts

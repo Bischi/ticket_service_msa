@@ -11,20 +11,19 @@ namespace exampleservice.TicketService.Repositories
 {
     public class TicketStorageRepository : ITicketStorageRepository
     {
-        // Id, Ticket
-        private Dictionary<string, Ticket> Tickets;
+        // TicketNumber, Ticket
+        private readonly Dictionary<string, Ticket> Tickets;
 
         public TicketStorageRepository()
         {
             Tickets = new Dictionary<string, Ticket>();
         }
 
-        public async Task<int> Add(Ticket ticket)
+        public async Task<bool> Add(Ticket ticket)
         {
             return await Task.Run(() =>
             {
-                Tickets.Add(ticket.TicketNumber, ticket);
-                return 1;
+                return Tickets.TryAdd(ticket.TicketNumber, ticket);
             });
         }
 
