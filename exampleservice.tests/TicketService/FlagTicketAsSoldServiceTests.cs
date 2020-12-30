@@ -8,7 +8,7 @@ using Moq;
 using NUnit.Framework;
 using System.Threading.Tasks;
 
-namespace exampleservice.tests.SellTicketService
+namespace exampleservice.tests.TicketService
 {
     [TestFixture]
     public class FlagTicketAsSoldServiceTests
@@ -20,7 +20,7 @@ namespace exampleservice.tests.SellTicketService
             string ticketNumber = "Ticket#1";
             var database = new TicketStorageRepository();
             await database.Add(createTicket(ticketNumber, true, true));
-            var instanceUnderTest = new TicketService.TicketService(busMock.Object, database);
+            var instanceUnderTest = new exampleservice.TicketService.TicketService(busMock.Object, database);
             var createTicketCommand = new FlagTicketAsSoldCommand { TicketNumber = ticketNumber };
 
             var resultedEvent = await instanceUnderTest.Handle(createTicketCommand);
@@ -38,7 +38,7 @@ namespace exampleservice.tests.SellTicketService
             string ticketNumber = "Ticket#1";
             var database = new TicketStorageRepository();
             await database.Add(createTicket("ticketNrNotInDB", true, true));
-            var instanceUnderTest = new TicketService.TicketService(busMock.Object, database);
+            var instanceUnderTest = new exampleservice.TicketService.TicketService(busMock.Object, database);
             var createTicketCommand = new FlagTicketAsSoldCommand { TicketNumber = ticketNumber };
 
             var resultedEvent = await instanceUnderTest.Handle(createTicketCommand);

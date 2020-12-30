@@ -11,7 +11,7 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 
-namespace exampleservice.tests.SellTicketService
+namespace exampleservice.tests.TicketService
 {
     [TestFixture]
     public class TicketServiceTests
@@ -31,7 +31,7 @@ namespace exampleservice.tests.SellTicketService
 
             var database = new TicketStorageRepository();
 
-            var instanceUnderTest = new TicketService.TicketService(busMock.Object, database);
+            var instanceUnderTest = new exampleservice.TicketService.TicketService(busMock.Object, database);
             
             string ticketNumber = "Ticket#1";
 
@@ -66,7 +66,7 @@ namespace exampleservice.tests.SellTicketService
 
             var database = new TicketStorageRepository();
 
-            var instanceUnderTest = new TicketService.Steps.CreateTicketStep(database);
+            var instanceUnderTest = new exampleservice.TicketService.Steps.CreateTicketStep(database);
             var context = new TicketContext { Command = new CreateTicketCommand { Ticket = new Ticket { TicketNumber = number } } };
             await instanceUnderTest.Execute(context);
 

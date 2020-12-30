@@ -47,11 +47,15 @@ namespace exampleservice.TicketService
             }
         }
 
+        public async Task<EventBase> Handle(GetTicketsCommand command)
+        {
+            return await new GetTicketsScript(bus, dataBaseRepository).Handle(command);
+        }
+
         public async Task<EventBase> Handle(FlagTicketAsSoldCommand command)
         {
             return await new FlagTicketAsSoldScript(bus, dataBaseRepository).Handle(command);
         }
-
 
         public async Task<EventBase> Handle(OfferTicketForSellCommand command)
         {
