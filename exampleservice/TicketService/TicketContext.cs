@@ -13,5 +13,7 @@ namespace exampleservice.TicketService
         public bool WasCompensated { get; set; }
 
         public CreateTicketCommand Command { get; set; }
+
+        public bool TicketWasCreated { get; set; }
     }
 }

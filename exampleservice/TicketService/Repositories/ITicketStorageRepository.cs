@@ -12,9 +12,9 @@ namespace exampleservice.TicketService.Repositories
 {
     public interface ITicketStorageRepository
     {
-        public Task<int> Add(Ticket ticket);
         public Task<List<Ticket>> Get();
         public Task<List<Ticket>> Get(Func<List<Ticket>, List<Ticket>> filter);
+        public Task<bool> Add(Ticket ticket);
         public Task<Ticket> Get(string ticketNumber);
         public Task<int> Save(Ticket ticket);
     }
