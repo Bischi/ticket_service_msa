@@ -24,11 +24,8 @@ namespace exampleservice.tests.TicketService
 
             instanceUnderTest = new exampleservice.TicketService.TicketService(busMock.Object, database);
 
-            // TODO -> Id of Ticket should get set in Repository like with EF!!
-
             await database.Add(new Ticket
             {
-                Id = 1,
                 CreateDate = new DateTime(),
                 TicketNumber = "Ticket#1",
                 FromLocationId = 123,
@@ -40,7 +37,6 @@ namespace exampleservice.tests.TicketService
 
             await database.Add(new Ticket
             {
-                Id = 2,
                 CreateDate = new DateTime(),
                 TicketNumber = "Ticket#2",
                 FromLocationId = 123,
@@ -76,7 +72,7 @@ namespace exampleservice.tests.TicketService
         }
 
         [Test]
-        public async Task GetSoldTicketsSuceed()
+        public async Task GetSoldTicketsSucceed()
         {
             var getTicketsCommand = new GetTicketsCommand { OnlySoldTickets = true };
             var getTicketsResultEvent = await instanceUnderTest.Handle(getTicketsCommand);
@@ -92,6 +88,26 @@ namespace exampleservice.tests.TicketService
 
                 soldTicket.Should().NotBeNull();
                 soldTicket.IsAvailable.Should().BeFalse();
+            }
+        }
+
+        [Test]
+        public async Task GetAvailableTicketsSucceed()
+        {
+            var getTicketsCommand = new GetTicketsCommand { OnlyAvailableTickets = true };
+            var getTicketsResultEvent = await instanceUnderTest.Handle(getTicketsCommand);
+
+            using (new AssertionScope())
+            {
+                getTicketsResultEvent.Should().BeOfType(typeof(TicketsLoadedEvent));
+
+                var ticketsLoadedEvent = (TicketsLoadedEvent)getTicketsResultEvent;
+                ticketsLoadedEvent.Tickets.Should().HaveCount(1);
+
+                var soldTicket = ticketsLoadedEvent.Tickets.Single(x => x.TicketNumber.Equals("Ticket#1"));
+
+                soldTicket.Should().NotBeNull();
+                soldTicket.IsAvailable.Should().BeTrue();
             }
         }
     }

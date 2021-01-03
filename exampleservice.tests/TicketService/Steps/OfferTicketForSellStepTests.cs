@@ -16,7 +16,7 @@ namespace exampleservice.tests.TicketService.Steps
         {
             string ticketNumber = "MyTicketNumber";
             var database = new exampleservice.TicketService.Repositories.TicketStorageRepository();
-            await database.Add(createTicket(ticketNumber, false, false));
+            await database.Add(CreateTicket(ticketNumber, false, false));
             var instanceUnderTest = new OfferTicketForSellStep(database);
             var context = new OfferTicketForSellContext { Command = new OfferTicketForSellCommand { TicketNumber = ticketNumber } };
 
@@ -33,7 +33,7 @@ namespace exampleservice.tests.TicketService.Steps
         {
             string ticketNumber = "MyTicketNumber";
             var database = new exampleservice.TicketService.Repositories.TicketStorageRepository();
-            await database.Add(createTicket(ticketNumber, true, true));
+            await database.Add(CreateTicket(ticketNumber, true, true));
             var instanceUnderTest = new OfferTicketForSellStep(database);
             var context = new OfferTicketForSellContext { Command = new OfferTicketForSellCommand { TicketNumber = ticketNumber } };
 
@@ -50,7 +50,7 @@ namespace exampleservice.tests.TicketService.Steps
         {
             string ticketNumber = "MyTicketNumber";
             var database = new exampleservice.TicketService.Repositories.TicketStorageRepository();
-            await database.Add(createTicket(ticketNumber, false, true));
+            await database.Add(CreateTicket(ticketNumber, false, true));
             var instanceUnderTest = new OfferTicketForSellStep(database);
             var context = new OfferTicketForSellContext { Command = new OfferTicketForSellCommand { TicketNumber = ticketNumber } };
 
@@ -63,11 +63,11 @@ namespace exampleservice.tests.TicketService.Steps
         }
 
         [Test]
-        public async Task Execute_TicketNotInDb_RReturnCompensatedContext()
+        public async Task Execute_TicketNotInDb_ReturnCompensatedContext()
         {
             string ticketNumber = "MyTicketNumber";
             var database = new exampleservice.TicketService.Repositories.TicketStorageRepository();
-            await database.Add(createTicket("notValidTicketNR", true, true));
+            await database.Add(CreateTicket("notValidTicketNR", true, true));
             var instanceUnderTest = new OfferTicketForSellStep(database);
             var context = new OfferTicketForSellContext { Command = new OfferTicketForSellCommand { TicketNumber = ticketNumber } };
 
@@ -79,12 +79,14 @@ namespace exampleservice.tests.TicketService.Steps
             }
         }
 
-        private exampleservice.TicketService.Models.Ticket createTicket(string ticketNumber, bool hasOffer, bool isAvailable)
+        private exampleservice.TicketService.Models.Ticket CreateTicket(string ticketNumber, bool hasOffer, bool isAvailable)
         {
-            var ticket = new exampleservice.TicketService.Models.Ticket();
-            ticket.TicketNumber = ticketNumber;
-            ticket.HasOffer = hasOffer;
-            ticket.IsAvailable = isAvailable;
+            var ticket = new exampleservice.TicketService.Models.Ticket
+            {
+                TicketNumber = ticketNumber,
+                HasOffer = hasOffer,
+                IsAvailable = isAvailable
+            };
             return ticket;
         }
     }

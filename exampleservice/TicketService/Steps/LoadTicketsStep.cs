@@ -20,12 +20,24 @@ namespace exampleservice.TicketService.Steps
 
         protected override async Task<bool> StepSpecificExecute(GetTicketsContext contextType)
         {
-            contextType.Tickets = contextType.Command.OnlySoldTickets
-                ? await dataRepository.Get((tickets) =>
+            if (!contextType.Command.OnlySoldTickets && !contextType.Command.OnlyAvailableTickets)
+            {
+                contextType.Tickets = await dataRepository.Get();
+            }
+            else if (contextType.Command.OnlySoldTickets)
+            {
+                contextType.Tickets = await dataRepository.Get((tickets) =>
                 {
                     return tickets.Where(x => !x.IsAvailable).ToList();
-                })
-                : await dataRepository.Get();
+                });
+            }
+            else if (contextType.Command.OnlyAvailableTickets)
+            {
+                contextType.Tickets = await dataRepository.Get((tickets) =>
+                {
+                    return tickets.Where(x => x.IsAvailable).ToList();
+                });
+            }
 
             return true;
         }

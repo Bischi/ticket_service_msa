@@ -8,6 +8,7 @@ namespace exampleservice.TicketService.Contracts
 {
     public class GetTicketsCommand
     {
-        public bool OnlySoldTickets { get; set; }
+        public bool OnlySoldTickets { get; set; } = false;
+        public bool OnlyAvailableTickets { get; set; } = false;
     }
 }

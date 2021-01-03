@@ -19,7 +19,7 @@ namespace exampleservice.tests.TicketService
             var busMock = new Mock<IMessageBus>();
             string ticketNumber = "Ticket#1";
             var database = new TicketStorageRepository();
-            await database.Add(createTicket(ticketNumber, false, true));
+            await database.Add(CreateTicket(ticketNumber, false, true));
             var instanceUnderTest = new exampleservice.TicketService.TicketService(busMock.Object, database);
             var offerTicketForSellCommand = new OfferTicketForSellCommand { TicketNumber = ticketNumber };
 
@@ -37,7 +37,7 @@ namespace exampleservice.tests.TicketService
             var busMock = new Mock<IMessageBus>();
             string ticketNumber = "Ticket#1";
             var database = new TicketStorageRepository();
-            await database.Add(createTicket("ticketNrNotInDB", true, false));
+            await database.Add(CreateTicket("ticketNrNotInDB", true, false));
             var instanceUnderTest = new exampleservice.TicketService.TicketService(busMock.Object, database);
             var createTicketCommand = new OfferTicketForSellCommand { TicketNumber = ticketNumber };
 
@@ -49,13 +49,14 @@ namespace exampleservice.tests.TicketService
             }
         }
 
-
-        private Ticket createTicket(string ticketNumber, bool hasOffer, bool isAvailable)
+        private Ticket CreateTicket(string ticketNumber, bool hasOffer, bool isAvailable)
         {
-            var ticket = new Ticket();
-            ticket.TicketNumber = ticketNumber;
-            ticket.HasOffer = hasOffer;
-            ticket.IsAvailable = isAvailable;
+            var ticket = new Ticket
+            {
+                TicketNumber = ticketNumber,
+                HasOffer = hasOffer,
+                IsAvailable = isAvailable
+            };
             return ticket;
         }
     }
