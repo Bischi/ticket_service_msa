@@ -83,8 +83,8 @@ namespace exampleservice.tests.SellTicketService.Steps
         {
             var ticket = new exampleservice.TicketService.Models.Ticket();
             ticket.TicketNumber = ticketNumber;
-            ticket.hasOffer = hasOffer;
-            ticket.isAvailable = isAvailable;
+            ticket.HasOffer = hasOffer;
+            ticket.IsAvailable = isAvailable;
             return ticket;
         }
     }

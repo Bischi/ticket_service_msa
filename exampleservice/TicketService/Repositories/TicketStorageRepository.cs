@@ -17,6 +17,8 @@ namespace exampleservice.TicketService.Repositories
         // TicketNumber, Ticket
         private readonly Dictionary<string, Ticket> Tickets;
 
+        private int currentIdCounter = 1;
+
         public TicketStorageRepository()
         {
             Tickets = new Dictionary<string, Ticket>();
@@ -26,6 +28,12 @@ namespace exampleservice.TicketService.Repositories
         {
             return await Task.Run(() =>
             {
+                if (Tickets.ContainsKey(ticket.TicketNumber))
+                {
+                    return false;
+                }
+
+                ticket.Id = currentIdCounter++;
                 return Tickets.TryAdd(ticket.TicketNumber, ticket);
             });
         }

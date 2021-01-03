@@ -23,7 +23,7 @@ namespace exampleservice.TicketService.Steps
             contextType.Tickets = contextType.Command.OnlySoldTickets
                 ? await dataRepository.Get((tickets) =>
                 {
-                    return tickets.Where(x => !x.isAvailable).ToList();
+                    return tickets.Where(x => !x.IsAvailable).ToList();
                 })
                 : await dataRepository.Get();
 

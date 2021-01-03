@@ -54,8 +54,8 @@ namespace exampleservice.tests.TicketService
         {
             var ticket = new Ticket();
             ticket.TicketNumber = ticketNumber;
-            ticket.hasOffer = hasOffer;
-            ticket.isAvailable = isAvailable;
+            ticket.HasOffer = hasOffer;
+            ticket.IsAvailable = isAvailable;
             return ticket;
         }
     }

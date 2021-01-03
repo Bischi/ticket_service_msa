@@ -34,8 +34,8 @@ namespace exampleservice.tests.TicketService
                 FromLocationId = 123,
                 ToLocationId = 321,
                 MeansOfTransport = "Train",
-                hasOffer = false,
-                isAvailable = true
+                HasOffer = false,
+                IsAvailable = true
             });
 
             await database.Add(new Ticket
@@ -46,8 +46,8 @@ namespace exampleservice.tests.TicketService
                 FromLocationId = 123,
                 ToLocationId = 321,
                 MeansOfTransport = "Train",
-                hasOffer = false,
-                isAvailable = false
+                HasOffer = false,
+                IsAvailable = false
             });
 
         }
@@ -91,7 +91,7 @@ namespace exampleservice.tests.TicketService
                 var soldTicket = ticketsLoadedEvent.Tickets.Single(x => x.TicketNumber.Equals("Ticket#2"));
 
                 soldTicket.Should().NotBeNull();
-                soldTicket.isAvailable.Should().BeFalse();
+                soldTicket.IsAvailable.Should().BeFalse();
             }
         }
     }

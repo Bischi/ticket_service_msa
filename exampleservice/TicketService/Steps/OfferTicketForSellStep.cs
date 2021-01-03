@@ -22,13 +22,13 @@ namespace exampleservice.TicketService.Steps
                 return true;
             }
 
-            if (ticket.hasOffer || !ticket.isAvailable)
+            if (ticket.HasOffer || !ticket.IsAvailable)
             {
                 contextType.WasCompensated = true;
                 return true;
             }
 
-            ticket.hasOffer = true;
+            ticket.HasOffer = true;
 
             int affectedRows = await dataBaseRepository.Save(ticket);
             if (affectedRows == 0)

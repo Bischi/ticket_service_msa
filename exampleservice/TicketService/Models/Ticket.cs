@@ -20,8 +20,8 @@ namespace exampleservice.TicketService.Models
 
         public string MeansOfTransport { get; set; }
 
-        public bool isAvailable { get; set; } = true;
+        public bool IsAvailable { get; set; } = true;
 
-        public bool hasOffer { get; set; } = false;
+        public bool HasOffer { get; set; } = false;
     }
 }
